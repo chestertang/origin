@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.model.User" >
+    <id column="tr_customer_acount_id" property="trCustomerAcountId" jdbcType="BIGINT" />
+    <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+    <result column="cu_customer_info_id" property="cuCustomerInfoId" jdbcType="BIGINT" />
+    <result column="availble_amount" property="availbleAmount" jdbcType="DECIMAL" />
+    <result column="freeze_amount" property="freezeAmount" jdbcType="DECIMAL" />
+    <result column="payment_account_type" property="paymentAccountType" jdbcType="INTEGER" />
+    <result column="payment_account_no" property="paymentAccountNo" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+    <result column="version_no" property="versionNo" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="auto_flag" property="autoFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    tr_customer_acount_id, account_name, cu_customer_info_id, availble_amount, freeze_amount, 
+    payment_account_type, payment_account_no, status, create_time, update_time, create_user, 
+    update_user, version_no, remark, auto_flag
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.model.UserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user_info
+    where tr_customer_acount_id = #{trCustomerAcountId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_user_info
+    where tr_customer_acount_id = #{trCustomerAcountId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.model.UserExample" >
+    delete from t_user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.model.User" >
+    insert into t_user_info (tr_customer_acount_id, account_name, cu_customer_info_id, 
+      availble_amount, freeze_amount, payment_account_type, 
+      payment_account_no, status, create_time, 
+      update_time, create_user, update_user, 
+      version_no, remark, auto_flag
+      )
+    values (#{trCustomerAcountId,jdbcType=BIGINT}, #{accountName,jdbcType=VARCHAR}, #{cuCustomerInfoId,jdbcType=BIGINT}, 
+      #{availbleAmount,jdbcType=DECIMAL}, #{freezeAmount,jdbcType=DECIMAL}, #{paymentAccountType,jdbcType=INTEGER}, 
+      #{paymentAccountNo,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR}, #{updateUser,jdbcType=VARCHAR}, 
+      #{versionNo,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{autoFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.model.User" >
+    insert into t_user_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="trCustomerAcountId != null" >
+        tr_customer_acount_id,
+      </if>
+      <if test="accountName != null" >
+        account_name,
+      </if>
+      <if test="cuCustomerInfoId != null" >
+        cu_customer_info_id,
+      </if>
+      <if test="availbleAmount != null" >
+        availble_amount,
+      </if>
+      <if test="freezeAmount != null" >
+        freeze_amount,
+      </if>
+      <if test="paymentAccountType != null" >
+        payment_account_type,
+      </if>
+      <if test="paymentAccountNo != null" >
+        payment_account_no,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="updateUser != null" >
+        update_user,
+      </if>
+      <if test="versionNo != null" >
+        version_no,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="autoFlag != null" >
+        auto_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="trCustomerAcountId != null" >
+        #{trCustomerAcountId,jdbcType=BIGINT},
+      </if>
+      <if test="accountName != null" >
+        #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="cuCustomerInfoId != null" >
+        #{cuCustomerInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="availbleAmount != null" >
+        #{availbleAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="freezeAmount != null" >
+        #{freezeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentAccountType != null" >
+        #{paymentAccountType,jdbcType=INTEGER},
+      </if>
+      <if test="paymentAccountNo != null" >
+        #{paymentAccountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="versionNo != null" >
+        #{versionNo,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="autoFlag != null" >
+        #{autoFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.model.UserExample" resultType="java.lang.Integer" >
+    select count(*) from t_user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_user_info
+    <set >
+      <if test="record.trCustomerAcountId != null" >
+        tr_customer_acount_id = #{record.trCustomerAcountId,jdbcType=BIGINT},
+      </if>
+      <if test="record.accountName != null" >
+        account_name = #{record.accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cuCustomerInfoId != null" >
+        cu_customer_info_id = #{record.cuCustomerInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.availbleAmount != null" >
+        availble_amount = #{record.availbleAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.freezeAmount != null" >
+        freeze_amount = #{record.freezeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.paymentAccountType != null" >
+        payment_account_type = #{record.paymentAccountType,jdbcType=INTEGER},
+      </if>
+      <if test="record.paymentAccountNo != null" >
+        payment_account_no = #{record.paymentAccountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=CHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createUser != null" >
+        create_user = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateUser != null" >
+        update_user = #{record.updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.versionNo != null" >
+        version_no = #{record.versionNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.autoFlag != null" >
+        auto_flag = #{record.autoFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_user_info
+    set tr_customer_acount_id = #{record.trCustomerAcountId,jdbcType=BIGINT},
+      account_name = #{record.accountName,jdbcType=VARCHAR},
+      cu_customer_info_id = #{record.cuCustomerInfoId,jdbcType=BIGINT},
+      availble_amount = #{record.availbleAmount,jdbcType=DECIMAL},
+      freeze_amount = #{record.freezeAmount,jdbcType=DECIMAL},
+      payment_account_type = #{record.paymentAccountType,jdbcType=INTEGER},
+      payment_account_no = #{record.paymentAccountNo,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=CHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      create_user = #{record.createUser,jdbcType=VARCHAR},
+      update_user = #{record.updateUser,jdbcType=VARCHAR},
+      version_no = #{record.versionNo,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      auto_flag = #{record.autoFlag,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.model.User" >
+    update t_user_info
+    <set >
+      <if test="accountName != null" >
+        account_name = #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="cuCustomerInfoId != null" >
+        cu_customer_info_id = #{cuCustomerInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="availbleAmount != null" >
+        availble_amount = #{availbleAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="freezeAmount != null" >
+        freeze_amount = #{freezeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentAccountType != null" >
+        payment_account_type = #{paymentAccountType,jdbcType=INTEGER},
+      </if>
+      <if test="paymentAccountNo != null" >
+        payment_account_no = #{paymentAccountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null" >
+        update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="versionNo != null" >
+        version_no = #{versionNo,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="autoFlag != null" >
+        auto_flag = #{autoFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where tr_customer_acount_id = #{trCustomerAcountId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.model.User" >
+    update t_user_info
+    set account_name = #{accountName,jdbcType=VARCHAR},
+      cu_customer_info_id = #{cuCustomerInfoId,jdbcType=BIGINT},
+      availble_amount = #{availbleAmount,jdbcType=DECIMAL},
+      freeze_amount = #{freezeAmount,jdbcType=DECIMAL},
+      payment_account_type = #{paymentAccountType,jdbcType=INTEGER},
+      payment_account_no = #{paymentAccountNo,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      update_user = #{updateUser,jdbcType=VARCHAR},
+      version_no = #{versionNo,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      auto_flag = #{autoFlag,jdbcType=CHAR}
+    where tr_customer_acount_id = #{trCustomerAcountId,jdbcType=BIGINT}
+  </update>
+</mapper>
